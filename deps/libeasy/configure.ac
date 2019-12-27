@@ -20,7 +20,7 @@ includedir=${prefix}/include/easy
 PRESET_CFLAGS="$CFLAGS"
 PRESET_CPPFLAGS="$CPPFLAGS"
 PRESET_LDFLAGS="$LDFLAGS"
-CFLAGS="-g $PRESET_CFLAGS -Wall -Wno-error -fPIC -fno-strict-aliasing"
+CFLAGS="-g $PRESET_CFLAGS -Wall -Werror -fPIC -fno-strict-aliasing"
 CPPFLAGS="$PRESET_CPPFLAGS -D_GNU_SOURCE -D__STDC_LIMIT_MACROS"
 
 # Checks for header files.
@@ -35,7 +35,7 @@ MOSTLYCLEANFILES=
 AC_SUBST(MOSTLYCLEANFILES)
 AC_ARG_WITH([gcov], AS_HELP_STRING([--with-gcov], [enable code coverage(default is NO)]), [
     if test "$withval" = "yes"; then
-        CFLAGS="${PRESET_CFLAGS} -Wall -Wno-error -fPIC -ggdb3 -fprofile-arcs -ftest-coverage"
+        CFLAGS="${PRESET_CFLAGS} -Wall -Werror -fPIC -ggdb3 -fprofile-arcs -ftest-coverage"
 	LDFLAGS="-lgcov ${PRESET_LDFLAGS} -fprofile-arcs -ftest-coverage"
     fi
 ])
