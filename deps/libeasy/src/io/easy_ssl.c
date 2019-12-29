@@ -35,6 +35,7 @@ static int easy_ssl_pass_phrase_cb(char *buf, int size, int rwflag, void *conf);
 /**
  * 初始化ssl
  */
+/*todo:qpzhou
 static unsigned long id_function(void)
 {
     return ((unsigned long) pthread_self());
@@ -47,7 +48,7 @@ static void locking_function(int mode, int type, const char *file, int line)
     } else {
         easy_spin_unlock(&easy_ssl_lock_cs[type]);
     }
-}
+}*/
 int easy_ssl_init()
 {
     if (easy_ssl_connection_index == -1) {
@@ -78,14 +79,27 @@ int easy_ssl_init()
  */
 int easy_ssl_cleanup()
 {
-    ENGINE_cleanup();
-    EVP_cleanup();
-    CRYPTO_cleanup_all_ex_data();
-    ERR_remove_state(0);
+#if (OPENSSL_VERSION_NUMBER < 0x10100006L)
+#if (OPENSSL_VERSION_NUMBER < 0x01000000) || defined(USE_WOLFSSL)
+                ERR_remove_state(0);
+#else
+#if (OPENSSL_VERSION_NUMBER >= 0x10100005L) && \
+                !defined(LIBRESSL_VERSION_NUMBER) && \
+                !defined(OPENSSL_IS_BORINGSSL)
+                ERR_remove_thread_state();
+#else
+                ERR_remove_thread_state(NULL);
+#endif
+#endif
+                ERR_free_strings();
+                EVP_cleanup();
+                CRYPTO_cleanup_all_ex_data();
+#endif
     ERR_free_strings();
     //SSL_COMP_free();
     //sk_SSL_COMP_free (SSL_COMP_get_compression_methods());
-    CRYPTO_mem_leaks_fp(stderr);
+//todo:qpzhou
+ //   CRYPTO_mem_leaks_fp(stderr);
     easy_free((char *)easy_ssl_lock_cs);
 
     return EASY_OK;
@@ -291,10 +305,10 @@ static int easy_ssl_handshake(easy_connection_t *c)
         c->sc->handshaked = 1;
         c->read = easy_ssl_read;
         c->write = easy_ssl_write;
-
-        if (c->sc->connection->s3) {
-            c->sc->connection->s3->flags |= SSL3_FLAGS_NO_RENEGOTIATE_CIPHERS;
-        }
+//todo:qpzhou
+ //       if (c->sc->connection->s3) {
+ //           c->sc->connection->s3->flags |= SSL3_FLAGS_NO_RENEGOTIATE_CIPHERS;
+  //      }
 
         return EASY_OK;
     }
@@ -415,7 +429,7 @@ static void easy_ssl_connection_error(easy_connection_t *c, int sslerr, int err,
         if (n == SSL_R_BLOCK_CIPHER_PAD_IS_WRONG                     /*  129 */
                 || n == SSL_R_DIGEST_CHECK_FAILED                        /*  149 */
                 || n == SSL_R_LENGTH_MISMATCH                            /*  159 */
-                || n == SSL_R_NO_CIPHERS_PASSED                          /*  182 */
+ //todo:qpzhou               || n == SSL_R_NO_CIPHERS_PASSED                          /*  182 */
                 || n == SSL_R_NO_CIPHERS_SPECIFIED                       /*  183 */
                 || n == SSL_R_NO_SHARED_CIPHER                           /*  193 */
                 || n == SSL_R_RECORD_LENGTH_MISMATCH                     /*  213 */
@@ -1083,7 +1097,7 @@ static int easy_ssl_generate_rsa512_key(easy_ssl_ctx_t *ssl)
         return EASY_OK;
     }
 
-    key = RSA_generate_key(512, RSA_F4, NULL, NULL);
+//todo:qpzhou    key = RSA_generate_key(512, RSA_F4, NULL, NULL);
 
     if (key) {
         SSL_CTX_set_tmp_rsa(ssl->ctx, key);
@@ -1109,7 +1123,7 @@ static int easy_ssl_dhparam(easy_ssl_ctx_t *ssl, char *file)
      * y7qokiYUxb7spWWl/fHSh6K8BJvmd4Bg6RqSp1fjBI9osHb302zI8pul34HcLKcl
      * 7OZicMyaUDXYzs7vnqAnSmOrHlj6/UmI0PZdFGdX2gcd8EXP4WubAgEC
      * -----END DH PARAMETERS-----
-     */
+     
 
     static unsigned char    dh1024_p[] = {
         0xBB, 0xBC, 0x2D, 0xCA, 0xD8, 0x46, 0x74, 0x90, 0x7C, 0x43, 0xFC, 0xF5,
@@ -1123,9 +1137,9 @@ static int easy_ssl_dhparam(easy_ssl_ctx_t *ssl, char *file)
         0x35, 0xD8, 0xCE, 0xCE, 0xEF, 0x9E, 0xA0, 0x27, 0x4A, 0x63, 0xAB, 0x1E,
         0x58, 0xFA, 0xFD, 0x49, 0x88, 0xD0, 0xF6, 0x5D, 0x14, 0x67, 0x57, 0xDA,
         0x07, 0x1D, 0xF0, 0x45, 0xCF, 0xE1, 0x6B, 0x9B
-    };
+    };*/
 
-    static unsigned char    dh1024_g[] = { 0x02 };
+  //  static unsigned char    dh1024_g[] = { 0x02 };
 
     if (!file) {
 
@@ -1136,14 +1150,14 @@ static int easy_ssl_dhparam(easy_ssl_ctx_t *ssl, char *file)
             return EASY_ERROR;
         }
 
-        dh->p = BN_bin2bn(dh1024_p, sizeof(dh1024_p), NULL);
-        dh->g = BN_bin2bn(dh1024_g, sizeof(dh1024_g), NULL);
+// todo:qpzhou       dh->p = BN_bin2bn(dh1024_p, sizeof(dh1024_p), NULL);
+  //      dh->g = BN_bin2bn(dh1024_g, sizeof(dh1024_g), NULL);
 
-        if (dh->p == NULL || dh->g == NULL) {
-            easy_ssl_error(EASY_LOG_ERROR, "BN_bin2bn() failed");
-            DH_free(dh);
-            return EASY_ERROR;
-        }
+   //     if (dh->p == NULL || dh->g == NULL) {
+     //       easy_ssl_error(EASY_LOG_ERROR, "BN_bin2bn() failed");
+       //     DH_free(dh);
+         //   return EASY_ERROR;
+        //}
 
         SSL_CTX_set_tmp_dh(ssl->ctx, dh);
 

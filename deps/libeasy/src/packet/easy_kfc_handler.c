@@ -1,5 +1,6 @@
 #include "easy_kfc_handler.h"
 #include "easy_http_handler.h"
+#include <ctype.h>
 
 /**
  * 类似KFC的方式
