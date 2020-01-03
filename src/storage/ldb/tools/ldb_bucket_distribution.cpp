@@ -45,7 +45,7 @@ int output_bucket_distribution(const leveldb::VersionSet &versions) {
             int small_bucket = LdbKey::get_bucket_number(file_meta->smallest.user_key().data());
             int large_bucket = LdbKey::get_bucket_number(file_meta->largest.user_key().data());
             if (small_bucket != large_bucket) {
-                printf("file %"PRI64_PREFIX"u contains more than one bucket, small(%d) large(%d)\n", file_meta->number,
+                printf("file %" PRI64_PREFIX "u contains more than one bucket, small(%d) large(%d)\n", file_meta->number,
                        small_bucket, large_bucket);
                 continue;
             }
@@ -65,7 +65,7 @@ int output_bucket_distribution(const leveldb::VersionSet &versions) {
         int count = 0;
         for (std::set<int>::const_iterator iter = bucket_distribution[l].begin();
              iter != bucket_distribution[l].end(); ++iter) {
-            printf(" %04d[%08"PRI64_PREFIX"u]", *iter, bucket_size[l][*iter]);
+            printf(" %04d[%08" PRI64_PREFIX "u]", *iter, bucket_size[l][*iter]);
             count++;
             if (count > 5) {
                 printf("\nlevel %d: ", l);
@@ -79,7 +79,7 @@ int output_bucket_distribution(const leveldb::VersionSet &versions) {
     printf("all buckets:\n");
     for (int indx = 0; indx < MAX_BUCKET_NUMBER; ++indx) {
         if (all_bucket_size[indx] > 0) {
-            printf("bucket %4d size %08"PRI64_PREFIX"u\n", indx, all_bucket_size[indx]);
+            printf("bucket %4d size %08" PRI64_PREFIX "u\n", indx, all_bucket_size[indx]);
         }
     }
 
@@ -92,7 +92,7 @@ int output_bucket_distribution(const leveldb::VersionSet &versions) {
                 int count = 0;
                 for (std::set<uint64_t>::const_iterator iter = single_bucket_files.begin();
                      iter != single_bucket_files.end(); ++iter) {
-                    printf(" %08"PRI64_PREFIX"u ", *iter);
+                    printf(" %08" PRI64_PREFIX "u ", *iter);
                     count++;
                     if (count > 5) {
                         printf("\nbucket[%04d]: ", indx);

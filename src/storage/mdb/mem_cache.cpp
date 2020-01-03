@@ -186,7 +186,7 @@ void mem_cache::calc_slab_balance_info(std::map<int, int> &adjust_info) {
         log_warn("slab %d: items = %lu, evicts = %lu, need_count = %d, need_page = %d",
                  (*it)->slab_id, (*it)->item_total_count, (*it)->evict_total_count, need_count, need_page);
 
-        adjust_info.insert(make_pair<int, int>((*it)->slab_id, need_page));
+        adjust_info.insert(make_pair((*it)->slab_id, need_page));
 
         need_alloc_page += need_count > 0 ? need_page : 0;
     }

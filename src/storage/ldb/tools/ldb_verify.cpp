@@ -376,7 +376,7 @@ struct Task {
         DestBucket *dbt = NULL;
         if (iter == destbuckets.end()) {
             dbt = new DestBucket(destbucket);
-            destbuckets.insert(make_pair<int, DestBucket *>(destbucket, dbt));
+            destbuckets.insert(make_pair(destbucket, dbt));
         } else {
             dbt = iter->second;
         }

@@ -213,14 +213,14 @@ void LdbCompactTask::compact_gc(GcType gc_type, bool &all_done) {
                 // 'cause in one new task round, every file whose filenumber is large than round_largest_filenumber
                 // is generated after gced(ShouldDrop() filter)
                 get_db_stat(db_->db(), round_largest_filenumber_, "largest-filenumber");
-                log_warn("[%d] new task round, round_largest_filenumber: %"PRI64_PREFIX"u",
+                log_warn("[%d] new task round, round_largest_filenumber: %" PRI64_PREFIX "u",
                          db_->index(), round_largest_filenumber_);
             }
 
             uint64_t limit_filenumber = std::max(round_largest_filenumber_, gc_node.file_number_);
 
             DUMP_GCNODE(warn, gc_node,
-                        "[%d] gc type: %d, count: %zu, start time: %s, limit filenumber: %"PRI64_PREFIX"u",
+                        "[%d] gc type: %d, count: %zu, start time: %s, limit filenumber: %" PRI64_PREFIX "u",
                         db_->index(), gc_type, gc_scan_keys.size(),
                         tair::util::time_util::time_to_str(start_time).c_str(), limit_filenumber);
 
@@ -469,7 +469,7 @@ void LdbCleanTask::stop() {
 }
 
 void LdbCleanTask::do_clean() {
-    log_warn("do clean, max size(%"PRI64_PREFIX"u)", max_size_);
+    log_warn("do clean, max size(%" PRI64_PREFIX "u)", max_size_);
     leveldb::DBImpl *db = dynamic_cast<leveldb::DBImpl *>(db_->db());
     leveldb::Env *db_env = db->GetEnv();
     std::vector<std::string> filenames;

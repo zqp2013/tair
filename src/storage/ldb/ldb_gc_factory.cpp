@@ -68,7 +68,7 @@ bool GcLog::start(const char *name, LdbGcFactory *target, bool try_replay) {
                 }
                 file_offset_ = 0;
             } else {
-                log_info("start gc log succuess: %s, fileoffset: %"PRI64_PREFIX"d", name, file_offset_);
+                log_info("start gc log succuess: %s, fileoffset: %" PRI64_PREFIX "d", name, file_offset_);
             }
         }
     }
@@ -207,16 +207,16 @@ int32_t GcLog::log_record_count() {
         } else if (0 == file_size) {
             count = 0;
         } else if (file_size < GC_LOG_HEADER_SIZE) {
-            log_info("gc log file is invalid, less than header size: %"PRI64_PREFIX"d", file_size);
+            log_info("gc log file is invalid, less than header size: %" PRI64_PREFIX "d", file_size);
             count = 0;
         } else {
             if ((file_size - GC_LOG_HEADER_SIZE) % GC_LOG_RECORD_SIZE != 0) {
-                log_error("gc log file maybe conflict. filesize: %"PRI64_PREFIX"d, replay most", file_size);
+                log_error("gc log file maybe conflict. filesize: %" PRI64_PREFIX "d, replay most", file_size);
             }
             count = (file_size - GC_LOG_HEADER_SIZE) / GC_LOG_RECORD_SIZE;
         }
     }
-    log_info("gc log file size: %"PRI64_PREFIX"d, record count: %d", file_size, count);
+    log_info("gc log file size: %" PRI64_PREFIX "d, record count: %d", file_size, count);
     return count;
 }
 
@@ -430,7 +430,7 @@ void LdbGcFactory::try_evict() {
     if (!empty()) {
         uint64_t current_db_smallest_file_number = 0;
         get_db_stat(db_->db(), current_db_smallest_file_number, "smallest-filenumber");
-        log_info("try evict gc. buckets: %zu, area: %zu, db smallest filenumber: %"PRI64_PREFIX"u",
+        log_info("try evict gc. buckets: %zu, area: %zu, db smallest filenumber: %" PRI64_PREFIX "u",
                  gc_buckets_.size(), gc_areas_.size(), current_db_smallest_file_number);
         try_evict(gc_buckets_, GC_BUCKET, current_db_smallest_file_number);
         try_evict(gc_areas_, GC_AREA, current_db_smallest_file_number);
@@ -551,7 +551,7 @@ void LdbGcFactory::try_evict(GC_MAP &gc_container, GcType type, uint64_t limit_f
         // maybe we can sort by filenumber
         for (GC_MAP_ITER it = gc_container.begin(); it != gc_container.end();) {
             if (it->second.file_number_ < limit_file_number) {
-                DUMP_GCNODE(info, it->second, "evict gc node, type: %d, limit filenumber: %"PRI64_PREFIX"u",
+                DUMP_GCNODE(info, it->second, "evict gc node, type: %d, limit filenumber: %" PRI64_PREFIX "u",
                             type, limit_file_number);
                 log_->add(GC_RM, type, it->second);
                 gc_container.erase(it++);

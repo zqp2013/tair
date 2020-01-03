@@ -312,7 +312,7 @@ tair::common::BucketQueue *InstBinlogQueue::find_bucket_queue(int bucket) {
 }
 
 void InstBinlogQueue::insert_bucket_queue(tair::common::BucketQueue *queue) {
-    bucket_ques_.insert(std::make_pair<int32_t, tair::common::BucketQueue *>(queue->get_bucket(), queue));
+    bucket_ques_.insert(std::make_pair(queue->get_bucket(), queue));
 }
 
 bool InstBinlogQueue::need_read_binlog(LoggerType type) {

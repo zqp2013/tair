@@ -385,7 +385,7 @@ int tair_server::packet_handler(easy_request_t *r) {
     if (!bp->control_cmd && easy_atomic_add_return(&cur_queued_mem, -(int64_t) bp->size()) >= max_queued_mem) {
         time_t time_now = time(NULL);
         if (time_now > last_log_mem_exceed_time) {
-          log_error("memory exceed! cur_queued_men: %"PRI64_PREFIX"d max_queued_mem: %"PRI64_PREFIX"d",
+          log_error("memory exceed! cur_queued_men: %" PRI64_PREFIX "d max_queued_mem: %" PRI64_PREFIX "d",
               cur_queued_mem, max_queued_mem);
           last_log_mem_exceed_time = time_now;
         }
@@ -888,7 +888,7 @@ void tair_server::load_max_queued_mem() {
     }
     const char *max_queued_mem_str = config.getString(TAIRSERVER_SECTION, TAIR_MAX_QUEUED_MEM, "5368709120");
     max_queued_mem = strtoll(max_queued_mem_str, NULL, 10);
-    log_warn("max_queued_mem is %"PRI64_PREFIX"d", max_queued_mem);
+    log_warn("max_queued_mem is %" PRI64_PREFIX "d", max_queued_mem);
 }
 
 } // namespace end
@@ -956,7 +956,7 @@ void sign_handler(int sig) {
             log_warn("openup hearbeat update");
             break;
         case 56:
-            log_warn("cur used mem is %"PRI64_PREFIX"u", tair_server->get_cur_queued_mem());
+            log_warn("cur used mem is %" PRI64_PREFIX "u", tair_server->get_cur_queued_mem());
             break;
         case 57:
             // load mem used mem

@@ -36,8 +36,8 @@ public:
     const static int32_t MAX_THRESHOLD = 1000;
     const static time_t UP_INTERVAL = 10; // 10s
     const static time_t DOWN_INTERVAL = 5; // 10s
-    const static double UP_FACTOR = 0.3;
-    const static double DOWN_FACTOR = 0.5;
+    constexpr const static double UP_FACTOR = 0.3;
+    constexpr const static double DOWN_FACTOR = 0.5;
 
 private:
     time_t last_time_;

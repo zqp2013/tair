@@ -442,7 +442,7 @@ int main(int argc, char *argv[]) {
         // init data stat
         DataStat stat;
 
-        log_warn("start rsync data, g_wait_ms: %"PRI64_PREFIX"d, mtime_care: %s", g_wait_ms, mtime_care ? "yes" : "no");
+        log_warn("start rsync data, g_wait_ms: %" PRI64_PREFIX "d, mtime_care: %s", g_wait_ms, mtime_care ? "yes" : "no");
         // do data rsync
         uint32_t start_time = time(NULL);
         ret = do_rsync(bucket_container, filter,

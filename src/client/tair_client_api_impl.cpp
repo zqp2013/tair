@@ -2851,7 +2851,7 @@ int tair_client_impl::query_from_invalidserver(uint64_t invalid_server_id, inval
     }
     if (std::find(invalid_server_list.begin(), invalid_server_list.end(),
                   invalid_server_id) == invalid_server_list.end()) {
-        log_error("the invalid server: %"PRI64_PREFIX"u is not in the list.", invalid_server_id);
+        log_error("the invalid server: %" PRI64_PREFIX "u is not in the list.", invalid_server_id);
         return TAIR_RETURN_FAILED;
     }
     wait_object *cwo = this_wait_object_manager->create_wait_object();
@@ -3992,7 +3992,7 @@ int tair_client_impl::send_request(uint64_t server_id, base_packet *packet, int 
     //TODO: check flow
     int ret = TAIR_RETURN_SUCCESS;
     if (server_id == 0 || packet == NULL) {
-        log_error("param invalid. server id: %"PRI64_PREFIX"u", server_id);
+        log_error("param invalid. server id: %" PRI64_PREFIX "u", server_id);
         ret = TAIR_RETURN_FAILED;
     } else if (packet->ns() != 0 && flow_admin_.is_over_flow(server_id, packet->ns())) {
         log_info("flow control [%s] packet:%d",

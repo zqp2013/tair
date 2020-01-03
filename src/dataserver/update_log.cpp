@@ -193,7 +193,7 @@ lsn_type update_log::find_log_tail() {
                 return INVALID_LSN;
             if (restart_lsn != 0 && file_manager->find_log_file(restart_lsn - 1))
                 break;
-            log_error("can not find lsn: %"PRI64_PREFIX"u", restart_lsn);
+            log_error("can not find lsn: %" PRI64_PREFIX "u", restart_lsn);
         }
         restart_lsn = file->full() ? file->get_end_lsn() : max(restart_lsn, file->get_tail_hint());
     } while (file->full());
@@ -398,7 +398,7 @@ log_file *log_file_manager::find_reused_log_file(lsn_type cp_lsn) {
 }
 
 log_file *log_file_manager::create_new_file(lsn_type start_lsn) {
-    log_debug("create log file timestamp: %"PRI64_PREFIX"u", start_lsn);
+    log_debug("create log file timestamp: %" PRI64_PREFIX "u", start_lsn);
     mutex.lock();
     size_t file_num = log_files.size();
     std::string file_name = make_file_name((uint32_t) file_num);
@@ -468,7 +468,7 @@ void log_file::truncate(uint32_t size) {
 
 //reuse log file
 void log_file::reset(lsn_type startLsn) {
-    log_debug("reset log file startLsn: %"PRI64_PREFIX"u", startLsn);
+    log_debug("reset log file startLsn: %" PRI64_PREFIX "u", startLsn);
     set_start_lsn(startLsn);
     set_end_lsn(startLsn + FILE_PAYLOAD);
     set_tail_hint(startLsn);
@@ -582,7 +582,7 @@ bool log_writer::write(char *data, uint size) {
         log->set_flsn(end_lsn);
 
         cur_log_file = log->switch_log_file(cur_log_file->get_end_lsn());
-        log_info("change write file, file name is %s, start_lsn is %"PRI64_PREFIX"u, end_lsn is %"PRI64_PREFIX"u",
+        log_info("change write file, file name is %s, start_lsn is %" PRI64_PREFIX "u, end_lsn is %" PRI64_PREFIX "u",
                  cur_log_file->get_name(), cur_log_file->get_start_lsn(), cur_log_file->get_end_lsn());
         write_next = cur_log_file->get_start_lsn();
         offset = LOG_PAGE_HDR_SIZE;
@@ -744,7 +744,7 @@ log_record_entry *log_read_buffer::get_next(int db_id, lsn_type lsn, lsn_type en
     assert(end_lsn > lsn);
     if (has_read == false) {
         current_file = file_mgr->find_log_file(lsn, true);
-        log_info("first read, file name is %s, start_lsn is %"PRI64_PREFIX"u, end_lsn is %"PRI64_PREFIX"u",
+        log_info("first read, file name is %s, start_lsn is %" PRI64_PREFIX "u, end_lsn is %" PRI64_PREFIX "u",
                  current_file->get_name(), current_file->get_start_lsn(), current_file->get_end_lsn());
         offset = lsn - current_file->get_start_lsn() + LOG_PAGE_HDR_SIZE;
         uint64_t lsn_offset = (uint64_t) (end_lsn - lsn);
@@ -755,7 +755,7 @@ log_record_entry *log_read_buffer::get_next(int db_id, lsn_type lsn, lsn_type en
 
     if (lsn >= current_file->get_end_lsn(true)) {
         current_file = file_mgr->find_log_file(lsn, true);
-        log_info("change read file, file name is %s, start_lsn is %"PRI64_PREFIX"u, end_lsn is %"PRI64_PREFIX"u",
+        log_info("change read file, file name is %s, start_lsn is %" PRI64_PREFIX "u, end_lsn is %" PRI64_PREFIX "u",
                  current_file->get_name(), current_file->get_start_lsn(), current_file->get_end_lsn());
         buffer_offset = 0;
         offset = LOG_PAGE_HDR_SIZE;

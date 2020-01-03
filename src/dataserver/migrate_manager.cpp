@@ -99,7 +99,7 @@ void migrate_manager::run(tbsys::CThread *thread, void *arg) {
         do_run();
         after = tbsys::CTimeUtil::getTime();
         uint64_t interval = after - before;
-        log_debug("this migrate consume time:%"PRI64_PREFIX"u", interval);
+        log_debug("this migrate consume time:%" PRI64_PREFIX "u", interval);
         {
             tbsys::CThreadGuard guard(&mutex);
             is_running = 0;
@@ -351,7 +351,7 @@ bool migrate_manager::migrate_data_file(int db_id, vector<uint64_t> dest_servers
     delete packet;
     packet = NULL;
     storage_mgr->end_scan(info);
-    log_warn("migrate bucket db data end. total count: %"PRI64_PREFIX"d, all_done: %d, send suc: %d", total_count,
+    log_warn("migrate bucket db data end. total count: %" PRI64_PREFIX "d, all_done: %d, send suc: %d", total_count,
              !have_item, flag);
     return flag;
 }
@@ -359,7 +359,7 @@ bool migrate_manager::migrate_data_file(int db_id, vector<uint64_t> dest_servers
 bool migrate_manager::migrate_log(int db_id, vector<uint64_t> dest_servers, lsn_type start_lsn, lsn_type end_lsn) {
     bool flag = true, ret_flag = true, tag = false;
     log_scan_hander *handle = log->begin_scan(db_id, start_lsn, end_lsn);
-    log_info("begin scan, db_id is %d, start_lsn is %"PRI64_PREFIX"u, end_lsn is %"PRI64_PREFIX"u", db_id, start_lsn,
+    log_info("begin scan, db_id is %d, start_lsn is %" PRI64_PREFIX "u, end_lsn is %" PRI64_PREFIX "u", db_id, start_lsn,
              end_lsn);
     handle = log->get_next(handle);
     const log_record_entry *log_entry = handle->get_log_entry();

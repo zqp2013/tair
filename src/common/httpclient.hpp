@@ -83,7 +83,7 @@ public:
     }
 
     inline void Put(const std::string &name, const std::string &value) {
-        header_.insert(std::make_pair<std::string, std::string>(name, value));
+        header_.insert(std::make_pair(name, value));
     }
 
     inline const std::string &Get(const std::string &name) {

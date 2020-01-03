@@ -101,7 +101,7 @@ void recovery_manager::run(tbsys::CThread *thread, void *arg) {
         do_run();
         after = tbsys::CTimeUtil::getTime();
         uint64_t interval = after - before;
-        log_debug("this recovery consume time:%"PRI64_PREFIX"u", interval);
+        log_debug("this recovery consume time:%" PRI64_PREFIX "u", interval);
         {
             tbsys::CThreadGuard guard(&mutex);
             is_running = 0;
@@ -286,7 +286,7 @@ bool recovery_manager::send_packet(vector<uint64_t> dest_servers, P *packet, int
 }
 
 bool recovery_manager::recovery_log(int db_id, vector<uint64_t> dest_servers, lsn_type start_lsn, lsn_type end_lsn) {
-    log_debug("## recovery bucket(%d) from log(%"PRI64_PREFIX"u, %"PRI64_PREFIX"u)", db_id, start_lsn, end_lsn);
+    log_debug("## recovery bucket(%d) from log(%" PRI64_PREFIX "u, %" PRI64_PREFIX "u)", db_id, start_lsn, end_lsn);
     bool flag = true, ret_flag = true, tag = false;
     log_scan_hander *handle = log->begin_scan(db_id, start_lsn, end_lsn);
     handle = log->get_next(handle);

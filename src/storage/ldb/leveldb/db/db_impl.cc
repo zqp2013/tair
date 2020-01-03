@@ -1089,10 +1089,10 @@ void DBImpl::BackgroundCompactionRepairSST() {
       Log(options_.info_log, "SelfLevel Repair SST Compacting cancel!");
       break;
     }
-    Log(options_.info_log, "SelfLevel Repair SST Compacting file(%"PRI64_PREFIX"u)", manual_compaction_->files[i]);
+    Log(options_.info_log, "SelfLevel Repair SST Compacting file(%" PRI64_PREFIX "u)", manual_compaction_->files[i]);
     Compaction* c = versions_->CompactSingleSSTFile(manual_compaction_->files[i]);
     if (c == NULL) {
-      Log(options_.info_log, "SelfLevel Repair SST Compacting pick file(%"PRI64_PREFIX"u) failed!", manual_compaction_->files[i]);
+      Log(options_.info_log, "SelfLevel Repair SST Compacting pick file(%" PRI64_PREFIX "u) failed!", manual_compaction_->files[i]);
       continue;
     }
     CompactionState* compact = new CompactionState(c);
@@ -1124,7 +1124,7 @@ void DBImpl::BackgroundCompactionRepairSST() {
 
 Status DBImpl::DoCompactionWorkRepairSST(CompactionState* compact, FileMetaData* file_meta) {
   leveldb::Status status;
-  Log(options_.info_log, "SelfLevel Repair SST Compacting %d files, type(%d), file(%"PRI64_PREFIX"u)",
+  Log(options_.info_log, "SelfLevel Repair SST Compacting %d files, type(%d), file(%" PRI64_PREFIX "u)",
       compact->compaction->num_input_files(0), manual_compaction_->type, file_meta->number);
   leveldb::Iterator* input = versions_->MakeSingleFileInputIterator(file_meta);
   if (input == NULL) {

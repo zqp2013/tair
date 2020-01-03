@@ -1435,7 +1435,7 @@ int tair_manager::op_cmd(ServerCmdType cmd, std::vector<std::string> &params, st
                 } else if (params.size() == 3) {
                     int val = atoi(params[2].c_str());
                     std::map<std::string, int> m;
-                    m.insert(std::make_pair<std::string, int>(params[1], val));
+                    m.insert(std::make_pair(params[1], val));
                     if (params[0] == "all") {
                         return remote_sync_mgr->options("all", "", m);
                     } else {

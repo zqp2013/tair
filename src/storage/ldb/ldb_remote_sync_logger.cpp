@@ -97,7 +97,7 @@ uint64_t LdbRemoteSyncLogReader::restart() {
     if (instance_->db_ != NULL) {
         // restart first sequence
         first_sequence_ = dynamic_cast<leveldb::DBImpl *>(instance_->db_)->LastSequence() + 1;
-        log_warn("reader restart, first_sequence: %"PRI64_PREFIX"u", first_sequence_);
+        log_warn("reader restart, first_sequence: %" PRI64_PREFIX "u", first_sequence_);
     }
     return first_sequence_;
 }
@@ -232,7 +232,7 @@ int LdbRemoteSyncLogReader::start_new_reader(uint64_t min_number, uint64_t offse
         leveldb::DBImpl *db = dynamic_cast<leveldb::DBImpl *>(instance_->db_);
         if (first_sequence_ <= 0) {
             first_sequence_ = db->LastSequence() + 1;
-            log_warn("first sequence of ldb rsync log reader %d: %"PRI64_PREFIX"u", instance_->index_, first_sequence_);
+            log_warn("first sequence of ldb rsync log reader %d: %" PRI64_PREFIX "u", instance_->index_, first_sequence_);
         }
 
         leveldb::Env *db_env = db->GetEnv();
@@ -293,7 +293,7 @@ int LdbRemoteSyncLogReader::init_reader(uint64_t number, uint64_t offset) {
     if (s.ok()) {
         reading_logfile_number_ = number;
         // TODO: reporter
-        log_debug("start new ldb rsync reader, filenumber: %"PRI64_PREFIX"u offset %"PRI64_PREFIX"u",
+        log_debug("start new ldb rsync reader, filenumber: %" PRI64_PREFIX "u offset %" PRI64_PREFIX "u",
                   reading_logfile_number_, offset);
         reader_ = rfile != NULL ?
                   new leveldb::log::Reader(rfile, NULL, true, offset) :

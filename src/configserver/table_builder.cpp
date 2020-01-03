@@ -25,14 +25,14 @@ void table_builder::print_tokens_in_node() {
     log_debug("tokens");
     for (it = tokens_count_in_node.begin(); it != tokens_count_in_node.end();
          it++) {
-        log_debug("S(%s:%"PRI64_PREFIX"d,%d)=%d ", tbsys::CNetUtil::addrToString(it->first.first).c_str(),
+        log_debug("S(%s:%" PRI64_PREFIX "d,%d)=%d ", tbsys::CNetUtil::addrToString(it->first.first).c_str(),
                   it->first.first, it->first.second,
                   it->second);
     }
     log_debug("tokens_now");
     for (it = tokens_count_in_node_now.begin();
          it != tokens_count_in_node_now.end(); it++) {
-        log_debug("S(%s:%"PRI64_PREFIX"d,%d)=%d ", tbsys::CNetUtil::addrToString(it->first.first).c_str(),
+        log_debug("S(%s:%" PRI64_PREFIX "d,%d)=%d ", tbsys::CNetUtil::addrToString(it->first.first).c_str(),
                   it->first.first, it->first.second,
                   it->second);
     }
@@ -40,7 +40,7 @@ void table_builder::print_tokens_in_node() {
 
     for (it = mtokens_count_in_node.begin();
          it != mtokens_count_in_node.end(); it++) {
-        log_debug("S(%s:%"PRI64_PREFIX"d,%d)=%d ", tbsys::CNetUtil::addrToString(it->first.first).c_str(),
+        log_debug("S(%s:%" PRI64_PREFIX "d,%d)=%d ", tbsys::CNetUtil::addrToString(it->first.first).c_str(),
                   it->first.first, it->first.second,
                   it->second);
     }
@@ -53,7 +53,7 @@ void table_builder::print_count_server() {
         log_debug("%d:   ", it->first);
         for (server_list_type::iterator it2 = it->second.begin();
              it2 != it->second.end(); it2++) {
-            log_debug("%"PRI64_PREFIX"d,%d  ", it2->first, it2->second);
+            log_debug("%" PRI64_PREFIX "d,%d  ", it2->first, it2->second);
         }
     }
     log_debug("mcount:");
@@ -61,7 +61,7 @@ void table_builder::print_count_server() {
         log_debug("%d:   ", it->first);
         for (server_list_type::iterator it2 = it->second.begin();
              it2 != it->second.end(); it2++) {
-            log_debug("%"PRI64_PREFIX"d,%d  ", it2->first, it2->second);
+            log_debug("%" PRI64_PREFIX "d,%d  ", it2->first, it2->second);
         }
     }
 }
@@ -99,12 +99,12 @@ void table_builder::print_capabale() {
     server_capable_type::iterator it;
     log_debug("server capabale:");
     for (it = server_capable.begin(); it != server_capable.end(); it++) {
-        log_debug("%s:%"PRI64_PREFIX"d,%d %d   ", tbsys::CNetUtil::addrToString(it->first.first).c_str(),
+        log_debug("%s:%" PRI64_PREFIX "d,%d %d   ", tbsys::CNetUtil::addrToString(it->first.first).c_str(),
                   it->first.first, it->first.second, it->second);
     }
     for (it = master_server_capable.begin();
          it != master_server_capable.end(); it++) {
-        log_debug("%s:%"PRI64_PREFIX"d,%d %d   ", tbsys::CNetUtil::addrToString(it->first.first).c_str(),
+        log_debug("%s:%" PRI64_PREFIX "d,%d %d   ", tbsys::CNetUtil::addrToString(it->first.first).c_str(),
                   it->first.first, it->first.second, it->second);
     }
 }

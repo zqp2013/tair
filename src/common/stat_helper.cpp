@@ -118,7 +118,7 @@ void stat_helper::reset() {
     interval /= 1000000; // conver to second
     if (interval == 0) interval = 1;
 
-    log_debug("start calculate ratio, interval: %"PRI64_PREFIX"u", interval);
+    log_debug("start calculate ratio, interval: %" PRI64_PREFIX "u", interval);
     for (int i = 0; i < STAT_LENGTH; i++) {
         tair_stat *cs = curr_stat + i;
         int get_count = cs->get_count() / interval;

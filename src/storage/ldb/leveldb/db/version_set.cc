@@ -766,7 +766,7 @@ class VersionSet::Builder {
       if (level > 0 && !files->empty()) {
         // Must not overlap
         if (vset_->icmp_.Compare((*files)[files->size()-1]->largest, f->smallest) >= 0) {
-          Log(vset_->options_->info_log, "ERROR: add file out of order, f->number(%"PRI64_PREFIX"u)", f->number);
+          Log(vset_->options_->info_log, "ERROR: add file out of order, f->number(%" PRI64_PREFIX "u)", f->number);
         }
         assert(vset_->icmp_.Compare((*files)[files->size()-1]->largest,
                                     f->smallest) < 0);

@@ -76,7 +76,7 @@ void table_builder2::set_available_server(const node_info_set &ava_server) {
     map<uint32_t, int> pos_count;
     for (set<node_info *>::const_iterator it = ava_server.begin();
          it != ava_server.end(); it++) {
-        log_info("mask %"PRI64_PREFIX"u:%s & %"PRI64_PREFIX"u -->%"PRI64_PREFIX"u",
+        log_info("mask %" PRI64_PREFIX "u:%s & %" PRI64_PREFIX "u -->%" PRI64_PREFIX "u",
                  (*it)->server->server_id, tbsys::CNetUtil::addrToString((*it)->server->server_id).c_str(),
                  pos_mask, (*it)->server->server_id & pos_mask);
         available_server.

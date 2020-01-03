@@ -98,7 +98,7 @@ int RemoteSyncManager::init() {
             // every reader do each remote synchronization.
             setThreadCount(remote_sync_thread_count() + retry_remote_sync_thread_count());
             log_warn(
-                    "remote sync manger start. sync thread count: %d, retry sync thread count: %d, retry: %s, mtime_care: %s, max_process_count: %"PRI64_PREFIX"u",
+                    "remote sync manger start. sync thread count: %d, retry sync thread count: %d, retry: %s, mtime_care: %s, max_process_count: %" PRI64_PREFIX "u",
                     remote_sync_thread_count(), retry_remote_sync_thread_count(),
                     retry_logger_ != NULL ? "yes" : "no", mtime_care_ ? "yes" : "no", max_process_count_);
             start();
@@ -152,7 +152,7 @@ void RemoteSyncManager::set_wait_us(int64_t us) {
     if (us >= 0) {
         wait_us_ = us;
     }
-    log_warn("set wait us: %"PRI64_PREFIX"d", us);
+    log_warn("set wait us: %" PRI64_PREFIX "d", us);
 }
 
 int64_t RemoteSyncManager::get_wait_us() {
@@ -189,7 +189,7 @@ int RemoteSyncManager::do_remote_sync(int32_t index, RecordLogger *input_logger,
             continue;
         }
 
-        log_debug("@@ process count %"PRI64_PREFIX"u", processing_count_);
+        log_debug("@@ process count %" PRI64_PREFIX "u", processing_count_);
         if (processing_count_ > max_process_count_) {
             need_wait_us = SPEED_CONTROL_WAIT_US;
             continue;

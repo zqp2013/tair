@@ -54,7 +54,7 @@ Value Mixin::Get(const char *key) {
 }
 
 void Mixin::Put(const char *key, Value &value) {
-    map_.insert(std::make_pair<std::string, Value>(key, value));
+    map_.insert(std::make_pair(key, value));
 }
 }
 }

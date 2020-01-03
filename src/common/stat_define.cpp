@@ -806,7 +806,7 @@ int DiskStatStore::build_stat_from_exist(int fd) {
 
     void *data = mmap(0, size, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
     if (data == MAP_FAILED) {
-        log_error("map file fail. name: %s, size: %"PRI64_PREFIX"d, error: %s",
+        log_error("map file fail. name: %s, size: %" PRI64_PREFIX "d, error: %s",
                   path_, size, strerror(errno));
         return TAIR_RETURN_FAILED;
     }
@@ -825,7 +825,7 @@ int DiskStatStore::build_stat_from_exist(int fd) {
 
     // stat file is not compatible
     if (munmap(data, size) != 0)
-        log_error("munmap file fail. name: %s, size: %"PRI64_PREFIX"d, error: %s", path_, size, strerror(errno));
+        log_error("munmap file fail. name: %s, size: %" PRI64_PREFIX "d, error: %s", path_, size, strerror(errno));
 
     return TAIR_RETURN_FAILED;
 }
@@ -840,14 +840,14 @@ int DiskStatStore::build_stat_from_new(int fd) {
     size += unit_size_ * max_unit_count_;
 
     if (ftruncate(fd, size) < 0) {
-        log_error("reserve file size fail, name: %s, size: %"PRI64_PREFIX"d, error: %s",
+        log_error("reserve file size fail, name: %s, size: %" PRI64_PREFIX "d, error: %s",
                   path_, size, strerror(errno));
         return TAIR_RETURN_FAILED;
     }
 
     void *data = mmap(0, size, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
     if (data == MAP_FAILED) {
-        log_error("map file fail. name: %s, size: %"PRI64_PREFIX"d, error: %s",
+        log_error("map file fail. name: %s, size: %" PRI64_PREFIX "d, error: %s",
                   path_, size, strerror(errno));
         return TAIR_RETURN_FAILED;
     }
@@ -872,7 +872,7 @@ int DiskStatStore::flush(bool meta_only) {
     int64_t size = meta_only ? (sizeof(Header) + bitmap_->byte_size()) : mmap_size_;
     int ret = msync(mmap_data_, size, MS_ASYNC);
     if (ret != 0) {
-        log_error("msync data fail, size: %"PRI64_PREFIX"d, error: %s", size, strerror(errno));
+        log_error("msync data fail, size: %" PRI64_PREFIX "d, error: %s", size, strerror(errno));
     }
     return ret != 0 ? TAIR_RETURN_FAILED : TAIR_RETURN_SUCCESS;
 }

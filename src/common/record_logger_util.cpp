@@ -56,7 +56,7 @@ int RingBufferRecordLogger::init() {
     if (file_path_.empty()) {
         log_error("empty logger file path");
     } else if (mem_size_ <= RECORD_HEADER_SIZE) {
-        log_error("invalid max mem length: %"PRI64_PREFIX"d", mem_size_);
+        log_error("invalid max mem length: %" PRI64_PREFIX "d", mem_size_);
     } else if ((ret = cleanup()) != TAIR_RETURN_SUCCESS) {
         log_error("cleanup earlier logger fail: ret: %d", ret);
     } else {
@@ -81,7 +81,7 @@ int RingBufferRecordLogger::init() {
             if (*w_offset_ > mem_size_ || *r_offset_ > mem_size_ ||
                 (*w_offset_ > *r_offset_ && *reverse_ != 0) ||
                 (*w_offset_ < *r_offset_ && *reverse_ == 0)) {
-                log_warn("invalid w_offset: %"PRI64_PREFIX"d, r_offset: %"PRI64_PREFIX"d, reverse: %d",
+                log_warn("invalid w_offset: %" PRI64_PREFIX "d, r_offset: %" PRI64_PREFIX "d, reverse: %d",
                          *w_offset_, *r_offset_, *reverse_);
                 *w_offset_ = 0;
                 *r_offset_ = 0;
@@ -91,7 +91,7 @@ int RingBufferRecordLogger::init() {
             base_ += HEADER_SIZE;
 
             log_warn(
-                    "init ring buffer record logger success, base_: %p, w_offset: %"PRI64_PREFIX"d, r_offset: %"PRI64_PREFIX"d, reverse: %d",
+                    "init ring buffer record logger success, base_: %p, w_offset: %" PRI64_PREFIX "d, r_offset: %" PRI64_PREFIX "d, reverse: %d",
                     base_, *w_offset_, *r_offset_, *reverse_);
         }
     }
@@ -217,7 +217,7 @@ int RingBufferRecordLogger::cleanup() {
             ret = TAIR_RETURN_FAILED;
         } else if (s.st_size != mem_size_ + HEADER_SIZE) // mmap size conflict, backup
         {
-            log_warn("mem size conflict with earlier one, backup. old: %"PRI64_PREFIX"d <> now: %"PRI64_PREFIX"d",
+            log_warn("mem size conflict with earlier one, backup. old: %" PRI64_PREFIX "d <> now: %" PRI64_PREFIX "d",
                      s.st_size, mem_size_ + HEADER_SIZE);
             char buf[32];
             buf[0] = '.';
@@ -262,7 +262,7 @@ int SequentialFileRecordLogger::init() {
         ret = TAIR_RETURN_SUCCESS;
         int64_t file_size = file_->get_file_size();
         if (file_size < 0) {
-            log_error("get file %s size fail, ret: %"PRI64_PREFIX"d", file_path_.c_str(), file_size);
+            log_error("get file %s size fail, ret: %" PRI64_PREFIX "d", file_path_.c_str(), file_size);
             ret = TAIR_RETURN_FAILED;
         } else {
             w_offset_ = file_size;
@@ -286,7 +286,7 @@ int SequentialFileRecordLogger::add_record(int32_t index, int32_t type,
     if (ret == TAIR_RETURN_SUCCESS) {
         int64_t w_size = file_->pwrite_file(buf, total_size, w_offset_);
         if (w_size != total_size) {
-            log_error("write data fail, offset: %"PRI64_PREFIX"d, size: %d", w_offset_, total_size);
+            log_error("write data fail, offset: %" PRI64_PREFIX "d, size: %d", w_offset_, total_size);
         } else {
             w_offset_ += w_size;
         }

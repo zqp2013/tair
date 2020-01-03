@@ -47,7 +47,7 @@ bool CacheStat::start(const char *dir, int64_t max_file_size) {
             if (max_file_size > max_file_size_) {
                 max_file_size_ = max_file_size;
             }
-            log_info("start cache stat success, file_offset: %"PRI64_PREFIX"d, max_file_size: %"PRI64_PREFIX"d",
+            log_info("start cache stat success, file_offset: %" PRI64_PREFIX "d, max_file_size: %" PRI64_PREFIX "d",
                      file_offset_, max_file_size_);
         }
     }
@@ -286,7 +286,7 @@ void CacheStat::print_sentinel(const cache_stat *stat) {
 
 void CacheStat::print_stat(int32_t area, const cache_stat *stat) {
     fprintf(stderr,
-            "%6d %8"PRI64_PREFIX"u %8"PRI64_PREFIX"u %8"PRI64_PREFIX"u %8"PRI64_PREFIX"u %8"PRI64_PREFIX"u %6.2lf %8s %8s %8s %8s %8"PRI64_PREFIX"u %8"PRI64_PREFIX"u %6.2lf\n",
+            "%6d %8" PRI64_PREFIX "u %8" PRI64_PREFIX "u %8" PRI64_PREFIX "u %8" PRI64_PREFIX "u %8" PRI64_PREFIX "u %6.2lf %8s %8s %8s %8s %8" PRI64_PREFIX "u %8" PRI64_PREFIX "u %6.2lf\n",
             area, stat->evict_count, stat->remove_count, stat->put_count,
             stat->get_count, stat->hit_count,
             0 == stat->get_count ? 0.00 : static_cast<double>(stat->hit_count) / stat->get_count,

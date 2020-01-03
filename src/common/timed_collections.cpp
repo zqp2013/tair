@@ -230,7 +230,7 @@ uint64_t TimedCollections::incr_count(uint64_t server_id) {
         }
     } else {
         LRUNode *node = lru_->insert(server_id);
-        map_.insert(std::make_pair<uint64_t, LRUNode *>(server_id, node));
+        map_.insert(std::make_pair(server_id, node));
         count = 1;
     }
 
@@ -286,7 +286,7 @@ const std::string TimedCollections::view() {
     std::map<uint64_t, int> m;
     std::map<uint64_t, LRUNode *>::iterator iter;
     for (iter = map_.begin(); iter != map_.end(); iter++) {
-        m.insert(std::make_pair<uint64_t, int>(iter->first, iter->second->get_count()));
+        m.insert(std::make_pair(iter->first, iter->second->get_count()));
     }
 
     rwlock_.unlock();

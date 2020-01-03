@@ -135,7 +135,7 @@ storage::storage_manager *mdb_factory::create_embedded_mdb(const char *path) {
     }
 
     log_warn(
-            "create embedded mdb, mem type: %s, cache size: %"PRI64_PREFIX"d, page size: %d, factor: %f, hash_shift: %d.",
+            "create embedded mdb, mem type: %s, cache size: %" PRI64_PREFIX "d, page size: %d, factor: %f, hash_shift: %d.",
             TBSYS_CONFIG.getString(TAIRSERVER_SECTION, TAIR_MDB_TYPE, "mdb_shm"),
             mdb_param::size, mdb_param::page_size, mdb_param::factor, mdb_param::hash_shift);
     return manager;

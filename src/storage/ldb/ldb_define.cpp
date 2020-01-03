@@ -252,7 +252,7 @@ int LdbLogsReader::init_reader(uint64_t number) {
     if (s.ok()) {
         reading_logfile_number_ = number;
         // TODO: reporter
-        log_debug("start new ldb rsync reader, filenumber: %"PRI64_PREFIX"u", reading_logfile_number_);
+        log_debug("start new ldb rsync reader, filenumber: %" PRI64_PREFIX "u", reading_logfile_number_);
         reader_ = rfile != NULL ?
                   new leveldb::log::Reader(rfile, NULL, true, 0) :
                   new leveldb::log::Reader(sfile, NULL, true, 0);

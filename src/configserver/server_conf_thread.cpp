@@ -1148,7 +1148,7 @@ uint64_t server_conf_thread::get_master_config_server(uint64_t id,
         }
         delete bp;
     }
-    log_info("get_master_config_server id is [%"PRI64_PREFIX"d], ip=%s",
+    log_info("get_master_config_server id is [%" PRI64_PREFIX "d], ip=%s",
              master_id, tbsys::CNetUtil::addrToString(master_id).c_str());
     return master_id;
 }

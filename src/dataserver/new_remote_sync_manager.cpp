@@ -243,7 +243,7 @@ std::vector<std::pair<std::string, std::string> > NewRemoteSyncManager::get_rsyn
         } else {
             info = "NotPaused!" + info;
         }
-        v.push_back(std::make_pair<std::string, std::string>(iter->second->sid(), info));
+        v.push_back(std::make_pair(iter->second->sid(), info));
     }
     return v;
 }
@@ -1012,12 +1012,12 @@ void NewRemoteSyncManager::update_rsync_remote_config(std::vector<ClusterHandler
                 int ref = handler->Ref(); //incr ref
                 UNUSED(ref);
                 assert(ref == 1);
-                m->insert(std::make_pair<std::string, RemoteClusterHandler *>(handler->get_info(), handler));
+                m->insert(std::make_pair(handler->get_info(), handler));
             } else {
                 int ref = iter->second->Ref(); // incr ref
                 UNUSED(ref);
                 assert(ref == 2);
-                m->insert(std::make_pair<std::string, RemoteClusterHandler *>(iter->first, iter->second));
+                m->insert(std::make_pair(iter->first, iter->second));
                 // maybe need update cluster config
                 update_detail_cluster_config(iter->second, rconfig);
             }

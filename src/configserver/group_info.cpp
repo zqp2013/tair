@@ -659,7 +659,7 @@ bool group_info::load_config(tbsys::CConfig &config, uint32_t version,
                     10);
     if (pos_mask == 0)
         pos_mask = TAIR_POS_MASK;
-    log_info(" %s = %"PRI64_PREFIX"X", TAIR_STR_POS_MASK, pos_mask);
+    log_info(" %s = %" PRI64_PREFIX "X", TAIR_STR_POS_MASK, pos_mask);
 
     always_update_capacity_info = config.getInt(group_name, TAIR_ALWAYS_UPDATE_CAPACITY_INFO, 0) > 0;
     allow_failover_server = config.getInt(group_name, TAIR_ALLOW_FAILOVER_SERVER, 0) > 0;
@@ -1836,7 +1836,7 @@ int group_info::force_table_ops_check(const ops_check_option &option) {
         if (option.check_min_ds_num) {
             //make sure migrate is closed
             if (option.upnode_list_size >= static_cast<size_t>(min_data_server_count)) {
-                log_error("%s failed as min_server_count(%d) is not larger than alive_server_num(%"PRI64_PREFIX"u)",
+                log_error("%s failed as min_server_count(%d) is not larger than alive_server_num(%" PRI64_PREFIX "u)",
                           option.ops_name, min_data_server_count, option.upnode_list_size);
                 ret = TAIR_RETURN_FAILED;
                 break;
@@ -2324,12 +2324,12 @@ void group_info::set_force_rebuild() {
 }
 
 void group_info::print_server_count() {
-    hash_map<uint64_t, int, hash<int> > m;
+    hash_map<uint64_t, int, std::hash<int> > m;
     for (uint32_t i = 0; i < server_table_manager.get_server_bucket_count();
          i++) {
         m[server_table_manager.hash_table[i]]++;
     }
-    for (hash_map<uint64_t, int, hash<int> >::iterator it = m.begin();
+    for (hash_map<uint64_t, int, std::hash<int> >::iterator it = m.begin();
          it != m.end(); ++it) {
         log_info("[%s] %s => %d", group_name,
                  tbsys::CNetUtil::addrToString(it->first).c_str(),
@@ -2653,7 +2653,7 @@ int group_info::add_down_server(uint64_t server_id) {
     int ret = EXIT_SUCCESS;
     std::set<uint64_t>::const_iterator sit = tmp_down_server.find(server_id);
     if (sit == tmp_down_server.end()) {
-        log_debug("add server: %"PRI64_PREFIX"u not exist", server_id);
+        log_debug("add server: %" PRI64_PREFIX "u not exist", server_id);
         // add
         tmp_down_server.insert(server_id);
         // serialize to group.conf
@@ -2679,7 +2679,7 @@ int group_info::add_down_server(uint64_t server_id) {
         }
     } else //do nothing
     {
-        log_debug("add server: %"PRI64_PREFIX"u exist", server_id);
+        log_debug("add server: %" PRI64_PREFIX "u exist", server_id);
     }
     return ret;
 }
@@ -2782,7 +2782,7 @@ int group_info::select_build_strategy(const node_info_set &ava_server) {
     pos_count.clear();
     for (set<node_info *>::const_iterator it = ava_server.begin();
          it != ava_server.end(); it++) {
-        log_info("mask %"PRI64_PREFIX"u:%s & %"PRI64_PREFIX"u -->%"PRI64_PREFIX"u",
+        log_info("mask %" PRI64_PREFIX "u:%s & %" PRI64_PREFIX "u -->%" PRI64_PREFIX "u",
                  (*it)->server->server_id, tbsys::CNetUtil::addrToString((*it)->server->server_id).c_str(),
                  pos_mask, (*it)->server->server_id & pos_mask);
         (pos_count[(*it)->server->server_id & pos_mask])++;
