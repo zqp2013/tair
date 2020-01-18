@@ -9,5 +9,5 @@ apt-get install libssl-dev
 
 
 ## OpenSuSE安装方法：
-zypper install libopenssl-devel
-zypper se xxx  搜索安装包
+- zypper install libopenssl-devel
+- zypper se xxx  搜索安装包
