@@ -6,3 +6,8 @@ apt-get install libssl-dev
 
 
 >>> 由于libssl版本兼容问题，有编译警告，而.ac文件中-Werror会将警告当错误，可改成-Wno-error
+
+
+## OpenSuSE安装方法：
+zypper install libopenssl-devel
+zypper se xxx  搜索安装包
